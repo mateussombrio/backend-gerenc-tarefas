@@ -1,0 +1,21 @@
+{
+  "name": "backend-tarefa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mateussombrio/backend-gerenc-tarefas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mateussombrio/backend-gerenc-tarefas/issues"
+  },
+  "homepage": "https://github.com/mateussombrio/backend-gerenc-tarefas#readme"
+}
