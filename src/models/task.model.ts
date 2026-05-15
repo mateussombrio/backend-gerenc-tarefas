@@ -7,11 +7,11 @@ export class Task {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column("varchar(255)")
+  @Column({ type: "varchar", length: 255 })
   @IsNotEmpty()
   title!: string;
 
-  @Column("varchar")
+  @Column({type: "varchar", length: 255})
   description!: string;
 
   @Column({ default: false })

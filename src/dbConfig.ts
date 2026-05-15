@@ -4,7 +4,7 @@ import { Category } from "./models/category.model.js";
 
 export const bancoDados = new DataSource({
   type: "postgres",
-  database: "tasks.db",
+  database: "tasksdb",
   host: "localhost",
   port: 5432,
   username: "postgres",
