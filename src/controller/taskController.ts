@@ -5,6 +5,7 @@ import { bancoDados } from "../dbConfig.js";
 
 export class TaskController {
   taskRepo = bancoDados.getRepository(Task);
+
   public async createTask(req: Request, res: Response) {
     const { title, description, isDone = false, category } = req.body;
     try {
@@ -39,6 +40,30 @@ export class TaskController {
       res.json(task);
     } catch (error) {
       res.status(500).json({ message: "Error updating task" });
+    }
+  }
+
+  public async deleteTask(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    try {
+      const task = await this.taskRepo.findOneBy({ id: id });
+      if (!task) {
+        return res.status(404).json({ message: "Task not found" });
+      }
+
+      await this.taskRepo.remove(task);
+      res.json({ message: "Task deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Error deleting task" });
+    }
+  }
+
+  public async getAllTasks(req: Request, res: Response) {
+    try {
+      const tasks = await this.taskRepo.find();
+      res.json(tasks);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching tasks" });
     }
   }
 }
