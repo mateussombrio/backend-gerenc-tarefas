@@ -1,6 +1,7 @@
 import express, { Express } from "express";
 import { DataSource } from "typeorm";
 import { TaskRoutes } from "./routes/taskRoutes.js";
+import { CategoryRoutes } from "./routes/categoryRoutes.js";
 
 export class App {
   private app: Express;
@@ -21,7 +22,9 @@ export class App {
 
   private initializeRoutes(): void {
     const taskRoutes = new TaskRoutes();
+    const categoryRoutes = new CategoryRoutes();
     this.app.use("/api/tasks", taskRoutes.getRouter());
+    this.app.use("/api/categories", categoryRoutes.getRouter());
   }
 
   public async start(): Promise<void> {
