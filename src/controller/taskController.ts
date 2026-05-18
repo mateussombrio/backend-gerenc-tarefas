@@ -5,15 +5,26 @@ import { bancoDados } from "../dbConfig.js";
 
 export class TaskController {
   taskRepo = bancoDados.getRepository(Task);
+  categoryRepo = bancoDados.getRepository(Category);
 
   public async createTask(req: Request, res: Response) {
     const { title, description, isDone = false, category } = req.body;
     try {
+      let foundCategory = null;
+      if (category) {
+        foundCategory = await this.categoryRepo.findOneBy({ id: Number(category) });
+        if (!foundCategory) {
+          return res.status(404).json({ message: "Category not found" });
+        }
+      }
+
       const task = new Task();
       task.title = title;
       task.description = description;
       task.isDone = isDone;
-      task.category = category;
+      if (foundCategory) {
+        task.category = foundCategory;
+      }
 
       await this.taskRepo.save(task);
       res.status(201).json(task);
@@ -26,7 +37,10 @@ export class TaskController {
     const id = Number(req.params.id);
     const { title, description, isDone, category } = req.body;
     try {
-      const task = await this.taskRepo.findOneBy({ id: id });
+      const task = await this.taskRepo.findOne({
+        where: { id: id },
+        relations: { category: true },
+      });
       if (!task) {
         return res.status(404).json({ message: "Task not found" });
       }
@@ -60,7 +74,9 @@ export class TaskController {
 
   public async getAllTasks(req: Request, res: Response) {
     try {
-      const tasks = await this.taskRepo.find();
+      const tasks = await this.taskRepo.find({
+        relations: { category: true },
+      });
       res.json(tasks);
     } catch (error) {
       res.status(500).json({ message: "Error fetching tasks" });
