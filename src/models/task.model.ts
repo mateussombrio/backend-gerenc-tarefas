@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { IsNotEmpty } from "class-validator";
 import { Category } from "./category.model.js";
 
@@ -17,7 +17,7 @@ export class Task {
   @Column({ default: false })
   isDone!: Boolean;
 
-  @OneToOne(() => Category)
+  @ManyToOne(() => Category)
   @JoinColumn()
   category!: Category;
 }
