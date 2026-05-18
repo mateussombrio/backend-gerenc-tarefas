@@ -1,4 +1,5 @@
 import express, { Express } from "express";
+import cors from "cors";
 import { DataSource } from "typeorm";
 import { TaskRoutes } from "./routes/taskRoutes.js";
 import { CategoryRoutes } from "./routes/categoryRoutes.js";
@@ -17,6 +18,7 @@ export class App {
   }
 
   private initializeMiddleware(): void {
+    this.app.use(cors());
     this.app.use(express.json());
   }
 
